@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DatabaseScripts\" />
     <Folder Include="DTO\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

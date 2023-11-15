@@ -14,5 +14,21 @@ namespace ProdigyWeb.Controllers
         {
             this.context = context;
         }
+
+        [Route("Login")]
+        [HttpPost]
+        public async Task<ActionResult<User>> Login([FromBody] User user)
+        {
+            User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Email == user.Email).FirstOrDefault();
+
+            if (u != null)
+            {
+                HttpContext.Session.SetObject("user", u);
+                return Ok(u);
+            }
+
+            return Unauthorized();
+        }
+
     }
 }
