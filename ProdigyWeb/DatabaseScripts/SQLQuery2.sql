@@ -27,6 +27,6 @@ CONSTRAINT UC_Email UNIQUE(Email)
 Go
 
 INSERT INTO Users VALUES
-('myulzary9@gmail.com', 'maya', 'yulzary', 'maya123');
+('maya@gmail.com', 'maya', 'yulzary', '123');
 
 GO
