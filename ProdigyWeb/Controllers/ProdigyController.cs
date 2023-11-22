@@ -30,5 +30,12 @@ namespace ProdigyWeb.Controllers
             return Unauthorized();
         }
 
+        [Route("Hello")]
+        [HttpGet]
+        public async Task<ActionResult> Hello()
+        {
+            return Ok("hi");
+        }
+
     }
 }
