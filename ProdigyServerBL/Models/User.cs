@@ -5,10 +5,9 @@ namespace ProdigyServerBL.Models;
 
 public partial class User
 {
-    //login is via email and password 
     public int Id { get; set; }
 
-    public string Email { get; set; } = null!;
+    public string Username { get; set; } = null!;
 
     public string FirstName { get; set; } = null!;
 

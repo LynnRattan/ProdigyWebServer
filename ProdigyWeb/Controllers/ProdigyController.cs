@@ -19,7 +19,7 @@ namespace ProdigyWeb.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Login([FromBody] User user)
         {
-            User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Email == user.Email).FirstOrDefault();
+            User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Username == user.Username).FirstOrDefault();
 
             if (u != null)
             {
