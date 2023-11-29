@@ -30,11 +30,22 @@ namespace ProdigyWeb.Controllers
             return Unauthorized();
         }
 
-        [Route("Hello")]
-        [HttpGet]
-        public async Task<ActionResult> Hello()
+        [Route("SignUp")]
+        [HttpPost]
+        public async Task<ActionResult> Register([FromBody] User user) 
         {
-            return Ok("hi");
+            if(context.Users.FirstOrDefault(u => u.Username == user.Username) != null)
+                return Conflict();  
+            try
+            {
+                context.Users.Add(user);
+                await context.SaveChangesAsync(); //doesnt work, doesnt have email in user. fix it bitch
+            }
+            catch (Exception)
+            {
+                throw new Exception("register error");
+            }
+            return Ok();
         }
 
     }

@@ -20,6 +20,8 @@ LastName nvarchar(30) not null,
 
 UserPswd nvarchar(30) not null,
 
+Email nvarchar(30) not null,
+
 CONSTRAINT UC_Username UNIQUE(Username)
 
 )
@@ -27,9 +29,9 @@ CONSTRAINT UC_Username UNIQUE(Username)
 Go
 
 INSERT INTO Users VALUES
-('m', 'maya', 'yulzary', '123');
+('m', 'maya', 'yulzary', '123', 'maya@gmail.com');
 
 INSERT INTO Users VALUES
-('avig', 'avigidigidigi', 'dorrrr', '69');
+('avig', 'avigidigidigi', 'dorrrr', '69', 'avigi@gmail.com');
 
 GO
