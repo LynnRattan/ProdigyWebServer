@@ -15,7 +15,7 @@ namespace ProdigyWeb.Controllers
             this.context = context;
         }
 
-        [Route("Login")]
+        [Route("Login")] //works
         [HttpPost]
         public async Task<ActionResult<User>> Login([FromBody] User user)
         {
@@ -30,7 +30,7 @@ namespace ProdigyWeb.Controllers
             return Unauthorized();
         }
 
-        [Route("SignUp")]
+        [Route("SignUp")] //works
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] User user) 
         {
@@ -39,13 +39,14 @@ namespace ProdigyWeb.Controllers
             try
             {
                 context.Users.Add(user);
-                await context.SaveChangesAsync(); //doesnt work, doesnt have email in user. fix it bitch
+                await context.SaveChangesAsync(); 
+                return Ok();
             }
             catch (Exception)
             {
                 throw new Exception("register error");
             }
-            return Ok();
+            return BadRequest();
         }
 
     }
