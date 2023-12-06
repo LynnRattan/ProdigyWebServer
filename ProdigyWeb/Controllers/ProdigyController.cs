@@ -46,7 +46,31 @@ namespace ProdigyWeb.Controllers
             {
                 throw new Exception("register error");
             }
-            return BadRequest();
+            
+        }
+
+        [Route("ChangeUsername")] 
+        [HttpPost]
+        public async Task<ActionResult<User>> ChangeUsername([FromBody] User user, [FromQuery] string newUsername)
+        {
+            if (user == null)
+                return BadRequest();
+
+            if (context.Users.FirstOrDefault(u => u.Username == newUsername) != null)
+                return Conflict();
+
+            try
+            {
+                User u1 = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                u1.Username = newUsername;
+                await context.SaveChangesAsync();
+                return Ok(u1);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            
         }
 
     }
