@@ -49,7 +49,7 @@ namespace ProdigyWeb.Controllers
             
         }
 
-        [Route("ChangeUsername")] 
+        [Route("ChangeUsername")] //not sure if worksd
         [HttpPost]
         public async Task<ActionResult<User>> ChangeUsername([FromBody] User user, [FromQuery] string newUsername)
         {
