@@ -56,7 +56,7 @@ namespace ProdigyWeb.Controllers
             if (user == null)
                 return BadRequest();
 
-            if (context.Users.FirstOrDefault(u => u.Username == newUsername) != null)
+            if (context.Users.FirstOrDefault(u => u.Username == newUsername) != null) //hi
                 return Conflict();
 
             try
