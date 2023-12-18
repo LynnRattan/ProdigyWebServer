@@ -49,14 +49,14 @@ namespace ProdigyWeb.Controllers
             
         }
 
-        [Route("ChangeUsername")] //not sure if worksd
+        [Route("ChangeUsername")] //works
         [HttpPost]
         public async Task<ActionResult<User>> ChangeUsername([FromBody] User user, [FromQuery] string newUsername)
         {
             if (user == null)
                 return BadRequest();
 
-            if (context.Users.FirstOrDefault(u => u.Username == newUsername) != null) //hi
+            if (context.Users.FirstOrDefault(u => u.Username == newUsername) != null)
                 return Conflict();
 
             try
@@ -71,6 +71,29 @@ namespace ProdigyWeb.Controllers
                 return BadRequest();
             }
             
+        }
+        [Route("ChangePassword")] 
+        [HttpPost]  
+        public async Task<ActionResult<User>> ChangePassword([FromBody] User user, [FromQuery] string newPass)
+        {
+            if (user == null)
+                return BadRequest();
+
+            if (context.Users.FirstOrDefault(u => u.UserPswd == newPass) != null)
+                return Conflict();
+
+            try
+            {
+                User u1 = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                u1.UserPswd = newPass;
+                await context.SaveChangesAsync();
+                return Ok(u1);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
 
     }
