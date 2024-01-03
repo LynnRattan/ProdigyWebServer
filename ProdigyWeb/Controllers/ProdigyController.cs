@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProdigyServerBL.Models;
+using ProdigyServerBL.Services;
 
 namespace ProdigyWeb.Controllers
 {
@@ -94,6 +95,14 @@ namespace ProdigyWeb.Controllers
                 return BadRequest();
             }
 
+        }
+
+        [Route("Spotify")]
+        [HttpPost]
+
+        public async Task DoSpotify()
+        {
+            await SpotifyServices.Main();
         }
 
     }
