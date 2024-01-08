@@ -97,13 +97,35 @@ namespace ProdigyWeb.Controllers
 
         }
 
-        [Route("Spotify")]
+        //upload file
+        [Route("UploadImage")]
         [HttpPost]
-
-        public async Task DoSpotify()
+        public async Task<IActionResult> UploadImage([FromQuery] int Id, IFormFile file)
         {
-            await SpotifyServices.Main();
-        }
 
+            User u = this.context.Users.Find(Id);
+
+
+            //check file size
+            if (file.Length > 0)
+            {
+                // Generate unique file name
+                string fileName = $"{u.Id}{Path.GetExtension(file.FileName)}";
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                try
+                {
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    return Ok();
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+            }
+
+            return BadRequest();
+        }
     }
 }

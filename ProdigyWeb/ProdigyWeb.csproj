@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
