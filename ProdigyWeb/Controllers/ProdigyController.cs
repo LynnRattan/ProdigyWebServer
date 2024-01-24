@@ -11,9 +11,11 @@ namespace ProdigyWeb.Controllers
     public class ValuesController : ControllerBase
     {
         ProdigyDbContext context;
-        public ValuesController(ProdigyDbContext context)
+        PenguinServices services;
+        public ValuesController(ProdigyDbContext context, PenguinServices services)
         {
             this.context = context;
+            this.services = services;
         }
 
         [Route("Login")] //works
@@ -96,6 +98,16 @@ namespace ProdigyWeb.Controllers
             }
 
         }
+
+        [Route("Booty")]
+        [HttpPost]
+        public async Task<ActionResult> Lala()
+        {
+            services.GetBitches();
+            return Ok();
+        }
+
+
 
         //upload file
         [Route("UploadImage")]

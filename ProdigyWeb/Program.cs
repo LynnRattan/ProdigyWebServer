@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using ProdigyServerBL.Models;
 using Microsoft.EntityFrameworkCore;
-
+using ProdigyServerBL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +26,8 @@ builder.Services.AddSession(options =>
 
 #endregion
 
+
+//builder.Services.AddScoped<PenguinServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
