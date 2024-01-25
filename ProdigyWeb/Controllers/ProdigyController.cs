@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProdigyServerBL.Models;
-using ProdigyServerBL.Services;
+//using ProdigyServerBL.Services;
 
 namespace ProdigyWeb.Controllers
 {
@@ -11,11 +11,11 @@ namespace ProdigyWeb.Controllers
     public class ValuesController : ControllerBase
     {
         ProdigyDbContext context;
-        PenguinServices services;
-        public ValuesController(ProdigyDbContext context, PenguinServices services)
+        //PenguinServices services;
+        public ValuesController(ProdigyDbContext context) // PenguinServices services
         {
             this.context = context;
-            this.services = services;
+            //this.services = services;
         }
 
         [Route("Login")] //works
@@ -75,6 +75,7 @@ namespace ProdigyWeb.Controllers
             }
             
         }
+
         [Route("ChangePassword")] 
         [HttpPost]  
         public async Task<ActionResult<User>> ChangePassword([FromBody] User user, [FromQuery] string newPass)
@@ -99,13 +100,14 @@ namespace ProdigyWeb.Controllers
 
         }
 
-        [Route("Booty")]
-        [HttpPost]
-        public async Task<ActionResult> Lala()
-        {
-            services.GetBitches();
-            return Ok();
-        }
+
+        //[Route("Booty")]
+        //[HttpPost]
+        //public async Task<ActionResult> Lala()
+        //{
+        //    await services.GetBitches();
+        //    return Ok();
+        //}
 
 
 
