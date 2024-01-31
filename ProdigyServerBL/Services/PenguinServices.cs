@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProdigyServerBL.Services
 {
-    public class PenguinServices : HttpClient
+    public class PenguinServices
     {
         private HttpClient client;
         const string URL = @"https://openlibrary.org/search.json";

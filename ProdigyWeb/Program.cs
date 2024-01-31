@@ -27,7 +27,7 @@ builder.Services.AddSession(options =>
 #endregion
 
 
-//builder.Services.AddScoped<PenguinServices>();
+builder.Services.AddScoped<PenguinServices>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
