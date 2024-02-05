@@ -18,6 +18,8 @@ namespace ProdigyWeb.Controllers
             this.services = services;
         }
 
+        #region login + signup
+
         [Route("Login")] //works
         [HttpPost]
         public async Task<ActionResult<User>> Login([FromBody] User user)
@@ -51,6 +53,10 @@ namespace ProdigyWeb.Controllers
             }
             
         }
+
+        #endregion
+
+        #region change X
 
         [Route("ChangeUsername")] //works
         [HttpPost]
@@ -100,46 +106,62 @@ namespace ProdigyWeb.Controllers
 
         }
 
+        #endregion
 
-        [Route("Booty")]
-        [HttpPost]
-        public async Task<ActionResult> Lala()
+
+        [Route("AuthorBooks")]
+        [HttpGet]
+        public async Task<ActionResult> BooksByAuthor(string name)
         {
-            await services.GetBitches();
+            var a = await services.GetBookByAuthor(name);
+            foreach(PenguinResult result in a)
+            {
+                if(result == null)
+                { break; }   
+                Console.WriteLine();
+                Console.WriteLine(result.Title);
+                Console.WriteLine(result.AuthorKey);
+                Console.WriteLine(result.AuthorName);
+                Console.WriteLine(result.Publisher);
+            }
             return Ok();
         }
 
 
 
-        //upload file
-        [Route("UploadImage")]
-        [HttpPost]
-        public async Task<IActionResult> UploadImage([FromQuery] int Id, IFormFile file)
-        {
-
-            User u = this.context.Users.Find(Id);
 
 
-            //check file size
-            if (file.Length > 0)
-            {
-                // Generate unique file name
-                string fileName = $"{u.Id}{Path.GetExtension(file.FileName)}";
 
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-                try
-                {
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
 
-                    return Ok();
-                }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
-            }
+        ////upload file
+        //[Route("UploadImage")]
+        //[HttpPost]
+        //public async Task<IActionResult> UploadImage([FromQuery] int Id, IFormFile file)
+        //{
 
-            return BadRequest();
-        }
+        //    User u = this.context.Users.Find(Id);
+
+
+        //    //check file size
+        //    if (file.Length > 0)
+        //    {
+        //        // Generate unique file name
+        //        string fileName = $"{u.Id}{Path.GetExtension(file.FileName)}";
+
+        //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+        //        try
+        //        {
+        //            using (var fileStream = new FileStream(path, FileMode.Create))
+        //            {
+        //                file.CopyTo(fileStream);
+        //            }
+
+        //            return Ok();
+        //        }
+        //        catch (Exception ex) { Console.WriteLine(ex.Message); }
+        //    }
+
+        //    return BadRequest();
+        //}
     }
 }
