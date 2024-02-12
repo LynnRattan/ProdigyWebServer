@@ -24,15 +24,19 @@ namespace ProdigyWeb.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Login([FromBody] User user)
         {
-            User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Username == user.Username).FirstOrDefault();
-
-            if (u != null)
+            try
             {
-                HttpContext.Session.SetObject("user", u);
-                return Ok(u);
-            }
+                User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Username == user.Username).FirstOrDefault();
 
-            return Unauthorized();
+                if (u != null)
+                {
+                    HttpContext.Session.SetObject("user", u);
+                    return Ok(u);
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception ex) { return  BadRequest(null); }    
         }
 
         [Route("SignUp")] //works
@@ -111,20 +115,22 @@ namespace ProdigyWeb.Controllers
 
         [Route("AuthorBooks")]
         [HttpGet]
-        public async Task<ActionResult> BooksByAuthor(string name)
+        public async Task<ActionResult<List<PenguinResult>>> BooksByAuthor(string name)
         {
-            var a = await services.GetBookByAuthor(name);
-            foreach(PenguinResult result in a)
+            try
             {
-                if(result == null)
-                { break; }   
-                Console.WriteLine();
-                Console.WriteLine(result.Title);
-                Console.WriteLine(result.AuthorKey);
-                Console.WriteLine(result.AuthorName);
-                Console.WriteLine(result.Publisher);
+               var a = await services.GetBookByAuthor(name);
+               if(a.Count>0)
+                {
+                    return Ok(a);
+                }
+               return NotFound();
+               
             }
-            return Ok();
+            catch (Exception)
+            {
+                return BadRequest(null);
+            }
         }
 
 

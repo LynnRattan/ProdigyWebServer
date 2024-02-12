@@ -3,6 +3,7 @@ using ProdigyServerBL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -30,20 +31,25 @@ namespace ProdigyServerBL.Services
         {
             try
             {
-                var response = await client.GetAsync(URL + "?author="+authorName);
+                var response = await client.GetAsync($"{URL}?author={authorName}&limit=10");
                 if(response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var content = JObject.Parse(await response.Content.ReadAsStringAsync());
+
                     List<PenguinResult> authors = new List<PenguinResult>();
                     for (int i = 0; i < 10; i++)
                     {
                         authors.Add(new PenguinResult(
-                            content["docs"][i]["publisher"][0].ToString(), 
-                            content["docs"][i]["author_key"][0].ToString(), 
-                            content["docs"][i]["author_name"][0].ToString(), 
+                            content["docs"][i]["publisher"][0].ToString(),
+                            content["docs"][i]["author_key"][0].ToString(),
+                            content["docs"][i]["author_name"][0].ToString(),
                             content["docs"][i]["title"].ToString()));
                     }
                     return authors;
+                }
+                if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return new List<PenguinResult>();
                 }
             }
             catch (Exception ex) { return null; };
