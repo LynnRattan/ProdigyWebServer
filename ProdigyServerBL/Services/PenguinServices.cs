@@ -34,17 +34,23 @@ namespace ProdigyServerBL.Services
                 var response = await client.GetAsync($"{URL}?author={authorName}&limit=10");
                 if(response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    
                     var content = JObject.Parse(await response.Content.ReadAsStringAsync());
 
                     List<PenguinResult> authors = new List<PenguinResult>();
-                    for (int i = 0; i < 10; i++)
+                    var arr = content["docs"].ToArray();
+                    if (arr.Length >= 10)
                     {
-                        authors.Add(new PenguinResult(
-                            content["docs"][i]["publisher"][0].ToString(),
-                            content["docs"][i]["author_key"][0].ToString(),
-                            content["docs"][i]["author_name"][0].ToString(),
-                            content["docs"][i]["title"].ToString()));
+                        for (int i = 0; i < 10; i++)
+                        {
+                            authors.Add(new PenguinResult(
+                                arr[i]["publisher"][0].ToString(),
+                                arr[i]["author_key"][0].ToString(),
+                                arr[i]["author_name"][0].ToString(),
+                                arr[i]["title"].ToString()));
+                        }
                     }
+
                     return authors;
                 }
                 if(response.StatusCode == System.Net.HttpStatusCode.NotFound)

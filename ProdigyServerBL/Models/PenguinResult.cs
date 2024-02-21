@@ -8,10 +8,10 @@ namespace ProdigyServerBL.Models
 {
     public class PenguinResult
     {
-        public string Publisher;
-        public string AuthorKey;
-        public string AuthorName;
-        public string Title;
+        public string Publisher { get; set; }
+        public string AuthorKey { get; set; }
+        public string AuthorName { get; set; }
+        public string Title { get; set; }
 
         public PenguinResult(string publisher, string authorKey, string authorName, string title)
         {
