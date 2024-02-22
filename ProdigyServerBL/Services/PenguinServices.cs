@@ -47,7 +47,8 @@ namespace ProdigyServerBL.Services
                                 arr[i]["publisher"][0].ToString(),
                                 arr[i]["author_key"][0].ToString(),
                                 arr[i]["author_name"][0].ToString(),
-                                arr[i]["title"].ToString()));
+                                arr[i]["title"].ToString(),
+                                arr[i]["isbn"][0].ToString()));
                         }
                     }
 

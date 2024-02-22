@@ -12,13 +12,15 @@ namespace ProdigyServerBL.Models
         public string AuthorKey { get; set; }
         public string AuthorName { get; set; }
         public string Title { get; set; }
+        public string ISBN { get; set; }
 
-        public PenguinResult(string publisher, string authorKey, string authorName, string title)
+        public PenguinResult(string publisher, string authorKey, string authorName, string title, string iSBN)
         {
             Publisher = publisher;
             AuthorKey = authorKey;
             AuthorName = authorName;
             Title = title;
+            ISBN = iSBN;
         }
     }
 }
