@@ -26,6 +26,15 @@ CONSTRAINT UC_Username UNIQUE(Username)
 
 )
 
+--Create Table BooksUsers (
+
+--ID int Identity primary key,
+--BookID int not null,
+--UserID int foreign key 
+
+
+--)
+
 Go
 
 INSERT INTO Users VALUES
