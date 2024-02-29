@@ -26,14 +26,18 @@ CONSTRAINT UC_Username UNIQUE(Username)
 
 )
 
---Create Table BooksUsers (
+Create Table UsersStarredBooks (
 
---ID int Identity primary key,
---BookID int not null,
---UserID int foreign key 
+ID int Identity primary key,
+
+BookISBN nvarchar(55) not null,
+
+UserID int not null foreign key references Users(ID),
 
 
---)
+)
+
+
 
 Go
 
@@ -43,4 +47,9 @@ INSERT INTO Users VALUES
 INSERT INTO Users VALUES
 ('avig', 'avigidigidigi', 'dorrrr', '69', 'avigi@gmail.com');
 
+INSERT INTO UsersStarredBooks VALUES
+('0063412632', 1);
+
 GO
+
+--scaffold-dbcontext "Server=localhost\sqlexpress;Database=ProdigyDB;Trusted_Connection=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models –force

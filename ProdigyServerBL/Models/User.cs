@@ -14,5 +14,8 @@ public partial class User
     public string LastName { get; set; } = null!;
 
     public string UserPswd { get; set; } = null!;
-    public string Email { get; set; } = null!;  
+
+    public string Email { get; set; } = null!;
+
+    public virtual ICollection<UsersStarredBook> UsersStarredBooks { get; set; } = new List<UsersStarredBook>();
 }

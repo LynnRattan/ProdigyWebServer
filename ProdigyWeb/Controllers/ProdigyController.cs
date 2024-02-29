@@ -26,7 +26,7 @@ namespace ProdigyWeb.Controllers
         {
             try
             {
-                User u = context.Users.Where(x => x.UserPswd == user.UserPswd && x.Username == user.Username).FirstOrDefault();
+                User u = context.GetUsersWithData().Where(x => x.UserPswd == user.UserPswd && x.Username == user.Username).FirstOrDefault();
 
                 if (u != null)
                 {
@@ -43,7 +43,7 @@ namespace ProdigyWeb.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Register([FromBody] User user) 
         {
-            if(context.Users.FirstOrDefault(u => u.Username == user.Username) != null)
+            if(context.GetUsersWithData().FirstOrDefault(u => u.Username == user.Username) != null)
                 return Conflict();  
             try
             {
@@ -74,7 +74,7 @@ namespace ProdigyWeb.Controllers
 
             try
             {
-                User u1 = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                User u1 = context.GetUsersWithData().FirstOrDefault(u => u.Id == user.Id);
                 u1.Username = newUsername;
                 await context.SaveChangesAsync();
                 return Ok(u1);
@@ -98,7 +98,7 @@ namespace ProdigyWeb.Controllers
 
             try
             {
-                User u1 = context.Users.FirstOrDefault(u => u.Id == user.Id);
+                User u1 = context.GetUsersWithData().FirstOrDefault(u => u.Id == user.Id);
                 u1.UserPswd = newPass;
                 await context.SaveChangesAsync();
                 return Ok(u1);
@@ -119,10 +119,20 @@ namespace ProdigyWeb.Controllers
         {
             try
             {
-               var a = await services.GetBookByAuthor(name);
+                var userId = HttpContext.Session.GetObject<User>("user").Id;
+                var a = await services.GetBookByAuthor(name);
+                var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId && a.Any(b => b.ISBN == x.BookIsbn));
+                List<PenguinResult> result= new List<PenguinResult>();  
+                foreach(var book in a) 
+                {
+                    if (favorites.Any(x => x.BookIsbn == book.ISBN))
+                        result.Add(new PenguinResult(book) { IsStarred = true });
+                    else
+                        result.Add(book);
+                }
                if(a.Count>0)
                 {
-                    return Ok(a);
+                    return Ok(result);
                 }
                return NotFound();
                
@@ -133,7 +143,30 @@ namespace ProdigyWeb.Controllers
             }
         }
 
+        [Route("StarBook")]
+        [HttpGet]
+        public async Task<ActionResult> StarBook([FromQuery] string isbn)
+        {
+            if (string.IsNullOrEmpty(isbn)) return BadRequest();
+            var userId = HttpContext.Session.GetObject<User>("user").Id;
 
+
+            try
+            {
+                if (context.UsersStarredBooks.Where(x => x.UserId==userId&&x.BookIsbn==isbn).AsNoTracking().FirstOrDefault()==null)
+                {
+                    context.UsersStarredBooks.Add(new() { BookIsbn = isbn, UserId=userId });
+                    await context.SaveChangesAsync();
+                }
+                
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
 
 
