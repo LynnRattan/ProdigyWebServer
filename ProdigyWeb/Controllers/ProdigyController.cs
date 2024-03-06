@@ -121,15 +121,16 @@ namespace ProdigyWeb.Controllers
             {
                 var userId = HttpContext.Session.GetObject<User>("user").Id;
                 var a = await services.GetBookByAuthor(name);
-                var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId && a.Any(b => b.ISBN == x.BookIsbn));
+                var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId);
+
                 List<PenguinResult> result= new List<PenguinResult>();  
                 foreach(var book in a) 
                 {
-                    if (favorites.Any(x => x.BookIsbn == book.ISBN))
+                    if (favorites.Any(x => x.BookIsbn == book.ISBN&&x.UserId==userId))
                         result.Add(new PenguinResult(book) { IsStarred = true });
                     else
                         result.Add(book);
-                }
+                }   
                if(a.Count>0)
                 {
                     return Ok(result);
