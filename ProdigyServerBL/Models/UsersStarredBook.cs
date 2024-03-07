@@ -12,4 +12,5 @@ public partial class UsersStarredBook
     public int UserId { get; set; }
 
     public virtual User User { get; set; } = null!;
+
 }

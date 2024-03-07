@@ -12,6 +12,7 @@ namespace ProdigyWeb.Controllers
     {
         ProdigyDbContext context;
         PenguinServices services;
+
         public ValuesController(ProdigyDbContext context, PenguinServices services)
         {
             this.context = context;
@@ -36,26 +37,26 @@ namespace ProdigyWeb.Controllers
 
                 return Unauthorized();
             }
-            catch (Exception ex) { return  BadRequest(null); }    
+            catch (Exception ex) { return BadRequest(null); }
         }
 
         [Route("SignUp")] //works
         [HttpPost]
-        public async Task<ActionResult<User>> Register([FromBody] User user) 
+        public async Task<ActionResult<User>> Register([FromBody] User user)
         {
-            if(context.GetUsersWithData().FirstOrDefault(u => u.Username == user.Username) != null)
-                return Conflict();  
+            if (context.GetUsersWithData().FirstOrDefault(u => u.Username == user.Username) != null)
+                return Conflict();
             try
             {
                 context.Users.Add(user);
-                await context.SaveChangesAsync(); 
+                await context.SaveChangesAsync();
                 return Ok(user);
             }
             catch (Exception)
             {
                 throw new Exception("register error");
             }
-            
+
         }
 
         #endregion
@@ -83,11 +84,11 @@ namespace ProdigyWeb.Controllers
             {
                 return BadRequest();
             }
-            
+
         }
 
-        [Route("ChangePassword")] 
-        [HttpPost]  
+        [Route("ChangePassword")]
+        [HttpPost]
         public async Task<ActionResult<User>> ChangePassword([FromBody] User user, [FromQuery] string newPass)
         {
             if (user == null)
@@ -123,20 +124,20 @@ namespace ProdigyWeb.Controllers
                 var a = await services.GetBookByAuthor(name);
                 var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId);
 
-                List<PenguinResult> result= new List<PenguinResult>();  
-                foreach(var book in a) 
+                List<PenguinResult> result = new List<PenguinResult>();
+                foreach (var book in a)
                 {
-                    if (favorites.Any(x => x.BookIsbn == book.ISBN&&x.UserId==userId))
+                    if (favorites.Any(x => x.BookIsbn == book.ISBN && x.UserId == userId))
                         result.Add(new PenguinResult(book) { IsStarred = true });
                     else
                         result.Add(book);
-                }   
-               if(a.Count>0)
+                }
+                if (a.Count > 0)
                 {
                     return Ok(result);
                 }
-               return NotFound();
-               
+                return NotFound();
+
             }
             catch (Exception)
             {
@@ -144,7 +145,7 @@ namespace ProdigyWeb.Controllers
             }
         }
 
-        [Route("StarBook")]
+        [Route("StarBook")] //if already starred, remove from UserStarredBooks. if not, add
         [HttpGet]
         public async Task<ActionResult> StarBook([FromQuery] string isbn)
         {
@@ -154,54 +155,31 @@ namespace ProdigyWeb.Controllers
 
             try
             {
-                if (context.UsersStarredBooks.Where(x => x.UserId==userId&&x.BookIsbn==isbn).AsNoTracking().FirstOrDefault()==null)
+
+                if (context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
                 {
-                    context.UsersStarredBooks.Add(new() { BookIsbn = isbn, UserId=userId });
+                    context.UsersStarredBooks.Remove(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
                     await context.SaveChangesAsync();
                 }
-                
-
-                return Ok();
+                //doesnt work :(
+                else
+                {
+                    context.UsersStarredBooks.Add(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    await context.SaveChangesAsync(); 
+                }
             }
             catch (Exception)
             {
                 return BadRequest();
             }
+
+
+            return Ok();
+
+
         }
 
-
-
-
-
-        ////upload file
-        //[Route("UploadImage")]
-        //[HttpPost]
-        //public async Task<IActionResult> UploadImage([FromQuery] int Id, IFormFile file)
-        //{
-
-        //    User u = this.context.Users.Find(Id);
-
-
-        //    //check file size
-        //    if (file.Length > 0)
-        //    {
-        //        // Generate unique file name
-        //        string fileName = $"{u.Id}{Path.GetExtension(file.FileName)}";
-
-        //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-        //        try
-        //        {
-        //            using (var fileStream = new FileStream(path, FileMode.Create))
-        //            {
-        //                file.CopyTo(fileStream);
-        //            }
-
-        //            return Ok();
-        //        }
-        //        catch (Exception ex) { Console.WriteLine(ex.Message); }
-        //    }
-
-        //    return BadRequest();
-        //}
     }
 }
+
+
