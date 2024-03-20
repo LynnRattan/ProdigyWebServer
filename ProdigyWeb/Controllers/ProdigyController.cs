@@ -158,13 +158,13 @@ namespace ProdigyWeb.Controllers
 
                 if (context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
                 {
-                    context.UsersStarredBooks.Remove(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    context.UsersStarredBooks.Add(new UsersStarredBook() { BookIsbn = isbn, UserId = userId });
                     await context.SaveChangesAsync();
                 }
                 //doesnt work :(
                 else
                 {
-                    context.UsersStarredBooks.Add(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    context.UsersStarredBooks.Remove(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
                     await context.SaveChangesAsync(); 
                 }
             }
