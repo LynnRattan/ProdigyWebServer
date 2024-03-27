@@ -161,7 +161,7 @@ namespace ProdigyWeb.Controllers
                     context.UsersStarredBooks.Add(new UsersStarredBook() { BookIsbn = isbn, UserId = userId });
                     await context.SaveChangesAsync();
                 }
-                //doesnt work :(
+                
                 else
                 {
                     context.UsersStarredBooks.Remove(context.UsersStarredBooks.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
