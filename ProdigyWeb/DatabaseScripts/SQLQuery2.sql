@@ -47,8 +47,8 @@ INSERT INTO Users VALUES
 INSERT INTO Users VALUES
 ('avig', 'avigidigidigi', 'dorrrr', '69', 'avigi@gmail.com');
 
-INSERT INTO UsersStarredBooks VALUES
-('0063412632', 1);
+--INSERT INTO UsersStarredBooks VALUES
+--('0063412632', 1);
 
 GO
 

@@ -63,7 +63,7 @@ namespace ProdigyWeb.Controllers
 
         #region change X
 
-        [Route("ChangeUsername")] //works
+        [Route("ChangeUsername")] 
         [HttpPost]
         public async Task<ActionResult<User>> ChangeUsername([FromBody] User user, [FromQuery] string newUsername)
         {

@@ -31,5 +31,10 @@ namespace ProdigyServerBL.Models
             Title = book.Title;
             ISBN = book.ISBN;
         }
+
+        public PenguinResult()
+        {
+
+        }
     }
 }

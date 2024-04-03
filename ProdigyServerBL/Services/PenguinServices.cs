@@ -39,17 +39,32 @@ namespace ProdigyServerBL.Services
 
                     List<PenguinResult> authors = new List<PenguinResult>();
                     var arr = content["docs"].ToArray();
-                    if (arr.Length >= 10)
+                    for (int i = 0; i < arr.Length; i++)
                     {
-                        for (int i = 0; i < 10; i++)
-                        {
-                            authors.Add(new PenguinResult(
-                                arr[i]["publisher"][0].ToString(),
-                                arr[i]["author_key"][0].ToString(),
-                                arr[i]["author_name"][0].ToString(),
-                                arr[i]["title"].ToString(),
-                                arr[i]["isbn"][0].ToString()));
-                        }
+                        PenguinResult resultToAdd = new PenguinResult();
+
+                        if (arr[i]["publisher"] != null ) { resultToAdd.Publisher = arr[i]["publisher"][0].ToString(); }
+                        else { resultToAdd.Publisher = "no information available"; };
+
+                        if (arr[i]["author_key"] != null) { resultToAdd.AuthorKey = arr[i]["author_key"][0].ToString(); }
+                        else { resultToAdd.AuthorKey = "no information available"; };
+
+                        if (arr[i]["author_name"] != null) { resultToAdd.AuthorName = arr[i]["author_name"][0].ToString(); }
+                        else { resultToAdd.AuthorName = "no information available"; };
+
+                        if (arr[i]["author_name"] != null) { resultToAdd.Title = arr[i]["title"][0].ToString(); }
+                        else { resultToAdd.Title = "no information available"; };
+
+                        if (arr[i]["isbn"] != null) { resultToAdd.ISBN = arr[i]["isbn"][0].ToString(); }
+                        else { resultToAdd.ISBN = "no information available"; };
+
+                        //fix this
+                        authors.Add(new PenguinResult(
+                            arr[i]["publisher"][0].ToString(),
+                            arr[i]["author_key"][0].ToString(),
+                            arr[i]["author_name"][0].ToString(),
+                            arr[i]["title"].ToString(),
+                            arr[i]["isbn"][0].ToString()));
                     }
 
                     return authors;
