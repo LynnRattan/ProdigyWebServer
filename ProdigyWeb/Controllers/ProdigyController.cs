@@ -50,6 +50,7 @@ namespace ProdigyWeb.Controllers
             {
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
+                HttpContext.Session.SetObject("user", user);
                 return Ok(user);
             }
             catch (Exception)
