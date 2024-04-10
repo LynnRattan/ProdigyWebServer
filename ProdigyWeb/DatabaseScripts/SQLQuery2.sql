@@ -39,6 +39,8 @@ UserID int not null foreign key references Users(ID),
 
 Create Table UsersTBR(
 
+ID int Identity primary key, 
+
 BookISBN nvarchar(55) not null,
 
 UserID int not null foreign key references Users(ID),

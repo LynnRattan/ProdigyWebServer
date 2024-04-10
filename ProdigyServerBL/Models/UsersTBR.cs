@@ -8,7 +8,7 @@ namespace ProdigyServerBL.Models
 {
     public class UsersTBR
     {
-
+        public int Id { get; set; }
         public string BookIsbn { get; set; } = null!;
 
         public int UserId { get; set; }
