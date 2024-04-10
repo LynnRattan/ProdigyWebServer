@@ -43,7 +43,7 @@ namespace ProdigyServerBL.Services
                     {
                         //PenguinResult resultToAdd = new PenguinResult();
 
-                        //if (arr[i]["publisher"] != null ) { resultToAdd.Publisher = arr[i]["publisher"][0].ToString(); }
+                        //if (arr[i]["publisher"] != null) { resultToAdd.Publisher = arr[i]["publisher"][0].ToString(); }
                         //else { resultToAdd.Publisher = "no information available"; };
 
                         //if (arr[i]["author_key"] != null) { resultToAdd.AuthorKey = arr[i]["author_key"][0].ToString(); }
@@ -57,8 +57,6 @@ namespace ProdigyServerBL.Services
 
                         //if (arr[i]["isbn"] != null) { resultToAdd.ISBN = arr[i]["isbn"][0].ToString(); }
                         //else { resultToAdd.ISBN = "no information available"; };
-
-                        
                         authors.Add(new PenguinResult(
                             arr[i]["publisher"][0].ToString(),
                             arr[i]["author_key"][0].ToString(),
@@ -79,3 +77,4 @@ namespace ProdigyServerBL.Services
         }
     }
 }
+

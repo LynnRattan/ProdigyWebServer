@@ -37,6 +37,15 @@ UserID int not null foreign key references Users(ID),
 
 )
 
+Create Table UsersTBR(
+
+BookISBN nvarchar(55) not null,
+
+UserID int not null foreign key references Users(ID),
+
+
+)
+
 
 
 Go
@@ -45,10 +54,9 @@ INSERT INTO Users VALUES
 ('m', 'maya', 'yulzary', '123', 'maya@gmail.com');
 
 INSERT INTO Users VALUES
-('avig', 'avigidigidigi', 'dorrrr', '69', 'avigi@gmail.com');
+('avig', 'avig', 'dorrrr', '456', 'avigi@gmail.com');
 
---INSERT INTO UsersStarredBooks VALUES
---('0063412632', 1);
+
 
 GO
 

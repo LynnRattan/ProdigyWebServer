@@ -18,4 +18,6 @@ public partial class User
     public string Email { get; set; } = null!;
 
     public virtual ICollection<UsersStarredBook> UsersStarredBooks { get; set; } = new List<UsersStarredBook>();
+
+    public virtual ICollection<UsersTBR> UsersTBRs { get; set; } = new List<UsersTBR>();
 }

@@ -174,6 +174,36 @@ namespace ProdigyWeb.Controllers
                 return BadRequest();
             }
 
+            return Ok();
+        }
+
+
+        [Route("TBRBook")] 
+        [HttpGet]
+        public async Task<ActionResult> TBRBook([FromQuery] string isbn)
+        {
+            if (string.IsNullOrEmpty(isbn)) return BadRequest();
+            var userId = HttpContext.Session.GetObject<User>("user").Id;
+
+            try
+            {
+
+                if (context.UsersTBR.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
+                {
+                    context.UsersTBR.Add(new UsersTBR() { BookIsbn = isbn, UserId = userId });
+                    await context.SaveChangesAsync();
+                }
+
+                else
+                {
+                    context.UsersTBR.Remove(context.UsersTBR.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
 
             return Ok();
 
