@@ -178,7 +178,7 @@ namespace ProdigyWeb.Controllers
         }
 
 
-        [Route("TBRBook")] 
+        [Route("TBRBook")] //if already starred, remove from usersTBR. if not, add
         [HttpGet]
         public async Task<ActionResult> TBRBook([FromQuery] string isbn)
         {
