@@ -22,6 +22,8 @@ UserPswd nvarchar(30) not null,
 
 Email nvarchar(30) not null,
 
+[Image] nvarchar(250) not null,
+
 CONSTRAINT UC_Username UNIQUE(Username)
 
 )

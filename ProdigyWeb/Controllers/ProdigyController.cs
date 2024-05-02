@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ProdigyServerBL.Models;
 using ProdigyServerBL.Services;
+using ProdigyWeb.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ProdigyWeb.Controllers
 {
@@ -12,11 +16,17 @@ namespace ProdigyWeb.Controllers
     {
         ProdigyDbContext context;
         PenguinServices services;
+        const string UserKey = "User";
+        readonly JsonSerializerOptions options;
 
         public ValuesController(ProdigyDbContext context, PenguinServices services)
         {
             this.context = context;
             this.services = services;
+            options = new JsonSerializerOptions()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
         }
 
         #region login + signup
@@ -178,7 +188,7 @@ namespace ProdigyWeb.Controllers
         }
 
 
-        [Route("TBRBook")] //if already starred, remove from usersTBR. if not, add
+        [Route("TBRBook")] //if already starred, remove from UsersTBR. if not, add
         [HttpGet]
         public async Task<ActionResult> TBRBook([FromQuery] string isbn)
         {
@@ -208,6 +218,48 @@ namespace ProdigyWeb.Controllers
             return Ok();
 
 
+        }
+
+
+        [Route(nameof(UploadImage))]
+        [HttpPost]
+        public async Task<ActionResult> UploadImage([FromForm] IFormFile? file = null)
+        {
+            User? sessionUser = HttpContext.Session.GetObject<User>(UserKey);
+            try
+            {
+
+                if (sessionUser.Id == null || sessionUser == null)
+                    return Unauthorized();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            if (file == null || file.Length == 0)
+                return BadRequest();
+
+            string fileName = $"{sessionUser.Id}{Path.GetExtension(file.FileName)}";
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+            sessionUser.Image = fileName;
+            context.Entry(sessionUser);
+            context.SaveChanges();
+
+            try
+            {
+                using (var fileStream = new FileStream(path, FileMode.Create))
+
+                    file.CopyTo(fileStream);
+                return Ok();
+            }
+
+            catch (Exception)
+            {
+                await context.SaveChangesAsync();
+                return BadRequest();
+            }
         }
 
     }

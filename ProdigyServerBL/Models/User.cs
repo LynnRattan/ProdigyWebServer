@@ -17,7 +17,9 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
+    public string? Image { get; set; }
+
     public virtual ICollection<UsersStarredBook> UsersStarredBooks { get; set; } = new List<UsersStarredBook>();
 
-    public virtual ICollection<UsersTBR> UsersTBRs { get; set; } = new List<UsersTBR>();
+    public virtual ICollection<UsersTBR> UsersTBR { get; set; } = new List<UsersTBR>();
 }
