@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ProdigyServerBL.Models;
 using ProdigyServerBL.Services;
-using ProdigyWeb.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -188,7 +187,7 @@ namespace ProdigyWeb.Controllers
         }
 
 
-        [Route("TBRBook")] //if already starred, remove from UsersTBR. if not, add
+        [Route("TBRBook")]
         [HttpGet]
         public async Task<ActionResult> TBRBook([FromQuery] string isbn)
         {
@@ -228,7 +227,6 @@ namespace ProdigyWeb.Controllers
             User? sessionUser = HttpContext.Session.GetObject<User>(UserKey);
             try
             {
-
                 if (sessionUser.Id == null || sessionUser == null)
                     return Unauthorized();
             }
