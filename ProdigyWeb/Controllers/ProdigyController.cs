@@ -223,69 +223,69 @@ namespace ProdigyWeb.Controllers
 
 
 
-        [Route("CRbook")]
-        [HttpGet]
-        public async Task<ActionResult> CurrentReadBook([FromQuery] string isbn)
-        {
-            if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
+        //[Route("CRbook")]
+        //[HttpGet]
+        //public async Task<ActionResult> CurrentReadBook([FromQuery] string isbn)
+        //{
+        //    if (string.IsNullOrEmpty(isbn)) return BadRequest();
+        //    var userId = HttpContext.Session.GetObject<User>("user").Id;
 
-            try
-            {
+        //    try
+        //    {
 
-                if (context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
-                {
-                    context.UsersCurrentRead.Add(new UsersCurrentRead() { BookIsbn = isbn, UserId = userId });
-                    await context.SaveChangesAsync();
-                }
+        //        if (context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
+        //        {
+        //            context.UsersCurrentRead.Add(new UsersCurrentRead() { BookIsbn = isbn, UserId = userId });
+        //            await context.SaveChangesAsync();
+        //        }
 
-                else
-                {
-                    context.UsersCurrentRead.Remove(context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
-                    await context.SaveChangesAsync();
-                }
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+        //        else
+        //        {
+        //            context.UsersCurrentRead.Remove(context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+        //            await context.SaveChangesAsync();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return Ok();
-
-
-        }
-
-        [Route("DroppedBook")]
-        [HttpGet]
-        public async Task<ActionResult> DroppedBook([FromQuery] string isbn)
-        {
-            if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
-
-            try
-            {
-
-                if (context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
-                {
-                    context.UsersDroppedBook.Add(new UsersDroppedBook() { BookIsbn = isbn, UserId = userId });
-                    await context.SaveChangesAsync();
-                }
-
-                else
-                {
-                    context.UsersDroppedBook.Remove(context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
-                    await context.SaveChangesAsync();
-                }
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
+        //    return Ok();
 
 
-        }
+        //}
+
+        //[Route("DroppedBook")]
+        //[HttpGet]
+        //public async Task<ActionResult> DroppedBook([FromQuery] string isbn)
+        //{
+        //    if (string.IsNullOrEmpty(isbn)) return BadRequest();
+        //    var userId = HttpContext.Session.GetObject<User>("user").Id;
+
+        //    try
+        //    {
+
+        //        if (context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
+        //        {
+        //            context.UsersDroppedBook.Add(new UsersDroppedBook() { BookIsbn = isbn, UserId = userId });
+        //            await context.SaveChangesAsync();
+        //        }
+
+        //        else
+        //        {
+        //            context.UsersDroppedBook.Remove(context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+        //            await context.SaveChangesAsync();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return Ok();
+
+
+        //}
 
 
         [Route(nameof(UploadImage))]

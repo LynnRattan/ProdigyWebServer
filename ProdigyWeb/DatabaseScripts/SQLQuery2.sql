@@ -12,22 +12,22 @@ Create Table Users (
 
 ID int Identity primary key,
 
-Username nvarchar(100) not null,
+	Username nvarchar(100) not null,
 
-FirstName nvarchar(30) not null,
+	FirstName nvarchar(30) not null,
 
-LastName nvarchar(30) not null,
+	LastName nvarchar(30) not null,
 
-UserPswd nvarchar(30) not null,
+	UserPswd nvarchar(30) not null,
 
-Email nvarchar(30) not null,
+	Email nvarchar(30) not null,
 
-[Image] nvarchar(250),
+	[Image] nvarchar(250),
 
-CONSTRAINT UC_Username UNIQUE(Username)
+	CONSTRAINT UC_Username UNIQUE(Username)
 
 )
-
+	
 Create Table UsersStarredBooks (
 
 ID int Identity primary key,
