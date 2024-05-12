@@ -40,7 +40,7 @@ namespace ProdigyWeb.Controllers
 
                 if (u != null)
                 {
-                    HttpContext.Session.SetObject("user", u);
+                    HttpContext.Session.SetObject(UserKey, u);
                     return Ok(u);
                 }
 
@@ -59,7 +59,7 @@ namespace ProdigyWeb.Controllers
             {
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
-                HttpContext.Session.SetObject("user", user);
+                HttpContext.Session.SetObject(UserKey, user);
                 return Ok(user);
             }
             catch (Exception)
@@ -220,14 +220,82 @@ namespace ProdigyWeb.Controllers
         }
 
 
+
+
+
+        [Route("CRbook")]
+        [HttpGet]
+        public async Task<ActionResult> CurrentReadBook([FromQuery] string isbn)
+        {
+            if (string.IsNullOrEmpty(isbn)) return BadRequest();
+            var userId = HttpContext.Session.GetObject<User>("user").Id;
+
+            try
+            {
+
+                if (context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
+                {
+                    context.UsersCurrentRead.Add(new UsersCurrentRead() { BookIsbn = isbn, UserId = userId });
+                    await context.SaveChangesAsync();
+                }
+
+                else
+                {
+                    context.UsersCurrentRead.Remove(context.UsersCurrentRead.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
+
+        }
+
+        [Route("DroppedBook")]
+        [HttpGet]
+        public async Task<ActionResult> DroppedBook([FromQuery] string isbn)
+        {
+            if (string.IsNullOrEmpty(isbn)) return BadRequest();
+            var userId = HttpContext.Session.GetObject<User>("user").Id;
+
+            try
+            {
+
+                if (context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).AsNoTracking().FirstOrDefault() == null)
+                {
+                    context.UsersDroppedBook.Add(new UsersDroppedBook() { BookIsbn = isbn, UserId = userId });
+                    await context.SaveChangesAsync();
+                }
+
+                else
+                {
+                    context.UsersDroppedBook.Remove(context.UsersDroppedBook.Where(x => x.UserId == userId && x.BookIsbn == isbn).First());
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
+
+        }
+
+
         [Route(nameof(UploadImage))]
         [HttpPost]
-        public async Task<ActionResult> UploadImage([FromForm] IFormFile? file = null)
+        public async Task<ActionResult<User>> UploadImage([FromForm] IFormFile? file = null)
         {
             User? sessionUser = HttpContext.Session.GetObject<User>(UserKey);
             try
             {
-                if (sessionUser.Id == null || sessionUser == null)
+                if (sessionUser == null || sessionUser.Id == null)
                     return Unauthorized();
             }
             catch (Exception)
@@ -250,7 +318,7 @@ namespace ProdigyWeb.Controllers
                 using (var fileStream = new FileStream(path, FileMode.Create))
 
                     file.CopyTo(fileStream);
-                return Ok();
+                return Ok(sessionUser);
             }
 
             catch (Exception)

@@ -22,7 +22,7 @@ UserPswd nvarchar(30) not null,
 
 Email nvarchar(30) not null,
 
-[Image] nvarchar(250) not null,
+[Image] nvarchar(250),
 
 CONSTRAINT UC_Username UNIQUE(Username)
 
@@ -39,6 +39,7 @@ UserID int not null foreign key references Users(ID),
 
 )
 
+
 Create Table UsersTBR(
 
 ID int Identity primary key, 
@@ -50,15 +51,35 @@ UserID int not null foreign key references Users(ID),
 
 )
 
+Create Table UsersCurrentRead(
 
+ID int Identity primary key, 
+
+BookISBN nvarchar(55) not null,
+
+UserID int not null foreign key references Users(ID),
+
+
+)
+
+Create Table UsersDroppedBook(
+
+ID int Identity primary key, 
+
+BookISBN nvarchar(55) not null,
+
+UserID int not null foreign key references Users(ID),
+
+
+)
 
 Go
 
 INSERT INTO Users VALUES
-('m', 'maya', 'yulzary', '123', 'maya@gmail.com');
+('m', 'maya', 'yulzary', '123', 'maya@gmail.com','');
 
 INSERT INTO Users VALUES
-('avig', 'avig', 'dorrrr', '456', 'avigi@gmail.com');
+('avig', 'avig', 'dorrrr', '456', 'avigi@gmail.com','');
 
 
 
