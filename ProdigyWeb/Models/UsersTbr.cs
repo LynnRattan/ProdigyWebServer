@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProdigyWeb.Models;
 
-public partial class UsersTbr
+public partial class UsersTBR
 {
     public int Id { get; set; }
 

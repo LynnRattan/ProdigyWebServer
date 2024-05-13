@@ -19,11 +19,11 @@ public partial class User
 
     public string? Image { get; set; }
 
+    public virtual ICollection<UsersCurrentRead> UsersCurrentReads { get; set; } = new List<UsersCurrentRead>();
+
+    public virtual ICollection<UsersDroppedBook> UsersDroppedBooks { get; set; } = new List<UsersDroppedBook>();
+
     public virtual ICollection<UsersStarredBook> UsersStarredBooks { get; set; } = new List<UsersStarredBook>();
 
-    public virtual ICollection<UsersTBR> UsersTBR { get; set; } = new List<UsersTBR>();
-
-    public virtual ICollection<UsersCurrentRead> UsersCR { get; set; } = new List<UsersCurrentRead>();
-
-    public virtual ICollection<UsersDroppedBook> UsersDrB { get; set; } = new List<UsersDroppedBook>();
+    public virtual ICollection<UsersTBR> UsersTBRs { get; set; } = new List<UsersTBR>();
 }
