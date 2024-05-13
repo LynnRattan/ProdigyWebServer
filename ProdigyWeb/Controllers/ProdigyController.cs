@@ -130,7 +130,7 @@ namespace ProdigyWeb.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetObject<User>("user").Id;
+                var userId = HttpContext.Session.GetObject<User>("User").Id;
                 var a = await services.GetBookByAuthor(name);
                 var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId);
 
@@ -160,7 +160,7 @@ namespace ProdigyWeb.Controllers
         public async Task<ActionResult> StarBook([FromQuery] string isbn)
         {
             if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
+            var userId = HttpContext.Session.GetObject<User>("User").Id;
 
 
             try
@@ -192,7 +192,7 @@ namespace ProdigyWeb.Controllers
         public async Task<ActionResult> TBRBook([FromQuery] string isbn)
         {
             if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
+            var userId = HttpContext.Session.GetObject<User>("User").Id;
 
             try
             {
@@ -225,7 +225,7 @@ namespace ProdigyWeb.Controllers
         public async Task<ActionResult> CurrentReadBook([FromQuery] string isbn)
         {
             if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
+            var userId = HttpContext.Session.GetObject<User>("User").Id;
 
             try
             {
@@ -257,7 +257,7 @@ namespace ProdigyWeb.Controllers
         public async Task<ActionResult> DroppedBook([FromQuery] string isbn)
         {
             if (string.IsNullOrEmpty(isbn)) return BadRequest();
-            var userId = HttpContext.Session.GetObject<User>("user").Id;
+            var userId = HttpContext.Session.GetObject<User>("User").Id;
 
             try
             {
