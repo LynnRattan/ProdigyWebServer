@@ -17,23 +17,23 @@ public partial class ProdigyDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UsersCurrentRead> UsersCurrentRead { get; set; }
+    public virtual DbSet<UsersCurrentRead> UsersCurrentReads { get; set; }
 
-    public virtual DbSet<UsersDroppedBook> UsersDroppedBook { get; set; }
+    public virtual DbSet<UsersDroppedBook> UsersDroppedBooks { get; set; }
 
     public virtual DbSet<UsersStarredBook> UsersStarredBooks { get; set; }
 
-    public virtual DbSet<UsersTBR> UsersTBR { get; set; }
+    public virtual DbSet<UsersTbr> UsersTbrs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=ProdigyDB;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ProdigyDB;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC272B0FE45A");
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC27F34F2CAA");
 
             entity.HasIndex(e => e.Username, "UC_Username").IsUnique();
 
@@ -48,7 +48,7 @@ public partial class ProdigyDbContext : DbContext
 
         modelBuilder.Entity<UsersCurrentRead>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UsersCur__3214EC2743F3141E");
+            entity.HasKey(e => e.Id).HasName("PK__UsersCur__3214EC273740E6B2");
 
             entity.ToTable("UsersCurrentRead");
 
@@ -66,7 +66,7 @@ public partial class ProdigyDbContext : DbContext
 
         modelBuilder.Entity<UsersDroppedBook>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UsersDro__3214EC273D81F198");
+            entity.HasKey(e => e.Id).HasName("PK__UsersDro__3214EC27D17BF4EF");
 
             entity.ToTable("UsersDroppedBook");
 
@@ -84,7 +84,7 @@ public partial class ProdigyDbContext : DbContext
 
         modelBuilder.Entity<UsersStarredBook>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UsersSta__3214EC27CEE627F3");
+            entity.HasKey(e => e.Id).HasName("PK__UsersSta__3214EC27E9F52652");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BookIsbn)
@@ -98,9 +98,9 @@ public partial class ProdigyDbContext : DbContext
                 .HasConstraintName("FK__UsersStar__UserI__276EDEB3");
         });
 
-        modelBuilder.Entity<UsersTBR>(entity =>
+        modelBuilder.Entity<UsersTbr>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UsersTBR__3214EC2770BCC40E");
+            entity.HasKey(e => e.Id).HasName("PK__UsersTBR__3214EC276EED9C98");
 
             entity.ToTable("UsersTBR");
 
@@ -110,7 +110,7 @@ public partial class ProdigyDbContext : DbContext
                 .HasColumnName("BookISBN");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UsersTBRs)
+            entity.HasOne(d => d.User).WithMany(p => p.UsersTbrs)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__UsersTBR__UserID__2A4B4B5E");
