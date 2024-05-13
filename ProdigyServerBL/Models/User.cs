@@ -25,5 +25,5 @@ public partial class User
 
     public virtual ICollection<UsersStarredBook> UsersStarredBooks { get; set; } = new List<UsersStarredBook>();
 
-    public virtual ICollection<UsersTBR> UsersTBRs { get; set; } = new List<UsersTBR>();
+    public virtual ICollection<UsersTbr> UsersTbrs { get; set; } = new List<UsersTbr>();
 }
