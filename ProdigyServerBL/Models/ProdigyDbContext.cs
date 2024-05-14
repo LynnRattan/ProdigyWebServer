@@ -17,13 +17,13 @@ public partial class ProdigyDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UsersCurrentRead> UsersCurrentReads { get; set; }
+    public virtual DbSet<UsersCurrentRead> UsersCurrentRead { get; set; }
 
-    public virtual DbSet<UsersDroppedBook> UsersDroppedBooks { get; set; }
+    public virtual DbSet<UsersDroppedBook> UsersDroppedBook { get; set; }
 
     public virtual DbSet<UsersStarredBook> UsersStarredBooks { get; set; }
 
-    public virtual DbSet<UsersTbr> UsersTbrs { get; set; }
+    public virtual DbSet<UsersTBR> UsersTBR { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -98,7 +98,7 @@ public partial class ProdigyDbContext : DbContext
                 .HasConstraintName("FK__UsersStar__UserI__276EDEB3");
         });
 
-        modelBuilder.Entity<UsersTbr>(entity =>
+        modelBuilder.Entity<UsersTBR>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__UsersTBR__3214EC276EED9C98");
 
@@ -110,7 +110,7 @@ public partial class ProdigyDbContext : DbContext
                 .HasColumnName("BookISBN");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UsersTbrs)
+            entity.HasOne(d => d.User).WithMany(p => p.UsersTBR)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__UsersTBR__UserID__2A4B4B5E");
