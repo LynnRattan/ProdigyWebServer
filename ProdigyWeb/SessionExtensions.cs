@@ -39,31 +39,7 @@ namespace ProdigyWeb
             session.SetString(key, JsonSerializer.Serialize(value, options));
         }
 
-        // Convert an object to a byte array
-        //public static void SetObject(this ISession session, string key, object value)
-        //{
-        //    BinaryFormatter bf = new BinaryFormatter();
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        bf.Serialize(ms, value);
-        //        session.Set(key, ms.ToArray());
-        //    }
-        //}
-
-        //public static T GetObject<T>(this ISession session, string key)
-        //{
-        //    using (var memStream = new MemoryStream())
-        //    {
-        //        byte[] arrBytes = session.Get(key);
-        //        var binForm = new BinaryFormatter();
-        //        memStream.Write(arrBytes, 0, arrBytes.Length);
-        //        memStream.Seek(0, SeekOrigin.Begin);
-        //        var obj = binForm.Deserialize(memStream);
-        //        if (obj is T)
-        //            return (T) obj;
-        //        return default(T);
-        //    }
-        //}
+        
 
     }
 }
