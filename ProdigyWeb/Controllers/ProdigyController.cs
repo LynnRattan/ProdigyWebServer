@@ -28,7 +28,7 @@ namespace ProdigyWeb.Controllers
             };
         }
 
-        #region login + signup
+        #region login, signup, logout
 
         [Route("Login")] //works
         [HttpPost]
@@ -65,6 +65,23 @@ namespace ProdigyWeb.Controllers
             catch (Exception)
             {
                 throw new Exception("register error");
+            }
+
+        }
+
+        [Route("Logout")] 
+        [HttpGet]
+        public async Task<ActionResult> Logout()
+        {
+            
+            try
+            {
+                HttpContext.Session.SetObject(UserKey, null);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw new Exception("logout error");
             }
 
         }

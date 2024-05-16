@@ -79,7 +79,19 @@ INSERT INTO Users VALUES
 ('m', 'maya', 'yulzary', '123', 'maya@gmail.com','');
 
 INSERT INTO Users VALUES
-('avig', 'avig', 'dorrrr', '456', 'avigi@gmail.com','');
+('avig', 'avigdor', 'dor', '456', 'avigi@gmail.com','');
+
+INSERT INTO Users VALUES
+('ohadi', 'ohadi', 'eyali', '1234', 'ohadi@gmail.com','');
+
+INSERT INTO Users VALUES
+('omer', 'omerG', 'golan', '111', 'omer@gmail.com','');
+
+INSERT INTO Users VALUES
+('john', 'johnsmith', 'smith', '222', 'john@gmail.com','');
+
+INSERT INTO Users VALUES
+('talsi', 'tal', 'si', '333', 'talsi@gmail.com','');
 
 
 
