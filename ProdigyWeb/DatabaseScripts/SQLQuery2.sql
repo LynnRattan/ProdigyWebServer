@@ -95,6 +95,7 @@ INSERT INTO Users VALUES
 
 
 
+
 GO
 
 --scaffold-dbcontext "Server=localhost\sqlexpress;Database=ProdigyDB;Trusted_Connection=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models –force

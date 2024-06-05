@@ -11,7 +11,7 @@ namespace ProdigyServerBL.Models
     {
         public IEnumerable<User> GetUsersWithData()
         {
-            return this.Users.Include(x => x.UsersStarredBooks);
+            return this.Users.Include(x => x.UsersStarredBooks).Include(x => x.UsersCurrentReads).Include(x => x.UsersTBR).Include(x => x.UsersDroppedBooks);
         }
     }
 }

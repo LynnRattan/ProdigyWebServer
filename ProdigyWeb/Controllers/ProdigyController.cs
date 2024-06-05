@@ -151,11 +151,28 @@ namespace ProdigyWeb.Controllers
                 var a = await services.GetBookByAuthor(name);
                 var favorites = context.UsersStarredBooks.Where(x => x.UserId == userId);
 
+                var current = context.UsersCurrentRead.Where(x => x.UserId == userId);
+
+                var dropped = context.UsersDroppedBook.Where(x => x.UserId == userId);
+
+                var tbr = context.UsersTBR.Where(x => x.UserId == userId);
+
                 List<PenguinResult> result = new List<PenguinResult>();
                 foreach (var book in a)
                 {
                     if (favorites.Any(x => x.BookIsbn == book.ISBN && x.UserId == userId))
                         result.Add(new PenguinResult(book) { IsStarred = true });
+
+                    else if (current.Any(x => x.BookIsbn == book.ISBN && x.UserId == userId))
+                        result.Add(new PenguinResult(book) { IsCR = true });
+
+                    else if (dropped.Any(x => x.BookIsbn == book.ISBN && x.UserId == userId))
+                        result.Add(new PenguinResult(book) { IsDrB = true });
+
+                    else if (tbr.Any(x => x.BookIsbn == book.ISBN && x.UserId == userId))
+                        result.Add(new PenguinResult(book) { IsTBR = true });
+
+
                     else
                         result.Add(book);
                 }

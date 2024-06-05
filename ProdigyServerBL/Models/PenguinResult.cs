@@ -15,6 +15,11 @@ namespace ProdigyServerBL.Models
         public string ISBN { get; set; }
         public bool IsStarred { get; set; } = false;
 
+        public bool IsTBR { get; set; } = false;
+        public bool IsCR { get; set; } = false;
+
+        public bool IsDrB { get; set; } = false;
+
         public PenguinResult(string publisher, string authorKey, string authorName, string title, string iSBN)
         {
             Publisher = publisher;
